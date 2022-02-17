@@ -7,7 +7,7 @@ const CategorySchema = new mongoose.Schema(
     description: String,
     image: String,
 
-    reciepes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Reciepe" }],
+    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
   },
   { timestamps: true }
 );

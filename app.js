@@ -18,11 +18,10 @@ app.use((req, res, next) => {
   );
   next();
 });
-console.log("hii", path.join(__dirname, "media"));
 
 // Routes
 app.use("/category", categoryRoutes);
-app.use("/recipes", recipesRoutes);
+app.use("/recipe", recipesRoutes);
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message || "Internal Server Error",

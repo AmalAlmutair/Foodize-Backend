@@ -1,18 +1,26 @@
-const Category = require("../../models/category");
-const Reciepe = require("../../models/reciepe");
+const Recipe = require("../../models/recipe");
 
-exports.fetchReciepes = async (reciepeId, next) => {
+exports.fetchRecipes = async (recipeId, next) => {
   try {
-    const reciepe = await Reciepe.findById(reciepeId);
-    return reciepe;
+    const recipe = await Recipe.findById(recipeId);
+    return recipe;
   } catch (error) {
     next(error);
   }
 };
 
-// exports.reciepeDelete = async (req, res, next) => {
+exports.getRecipes = async (req, res, next) => {
+  try {
+    const recipes = await Recipe.find();
+    return res.json(recipes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// exports.recipeDelete = async (req, res, next) => {
 //   try {
-//     await req.reciepe.remove();
+//     await req.recipe.remove();
 //     res.status(204).end();
 //   } catch (error) {
 //     next(error);
