@@ -1,28 +1,33 @@
 const express = require("express");
-
+// ? ------------------------THE FUNCTION THAT BEEN IMPORT IT ---------------------------------------
 const {
-  fetchReciepes,
-  //   reciepeDelete,
-  //   reciepeUpdate,
+  fetchRecipes,
+  getRecipes,
+  //   recipeDelete,
+  //   recipeUpdate,
 } = require("./controller.recipes");
 const upload = require("../../middleware/multer");
-
 const router = express.Router();
+// ? ------------------------------------------------------------------------------------
 
-router.param("reciepeId", async (req, res, next, reciepeId) => {
-  const reciepe = await fetchReciepes(reciepeId, next);
-  if (reciepe) {
-    req.reciepe = reciepe;
+router.param("recipeId", async (req, res, next, recipeId) => {
+  const recipe = await fetchRecipes(recipeId, next);
+  if (recipe) {
+    req.recipe = recipe;
     next();
   } else {
-    const err = new Error("Reciepe Not Found");
+    const err = new Error("Recipe Not Found");
     err.status = 404;
     next(err);
   }
 });
 
-router.get("/", fetchReciepes);
-// router.delete("/:reciepeId", reciepeDelete);
-// router.put("/:reciepeId", upload.single("image"), reciepeUpdate);
+//  ! ------------------------------ROUTES---------------------------------------
+// router.get("/", fetchRecipes);
+router.get("/", getRecipes);
+// router.get("/:ingredients", getRecipes);
+
+// router.delete("/:recipeId", recipeDelete);
+// router.put("/:recipeId", upload.single("image"), recipeUpdate);
 
 module.exports = router;

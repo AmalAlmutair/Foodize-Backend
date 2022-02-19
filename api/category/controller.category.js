@@ -1,6 +1,5 @@
-const category = require("../../models/category");
 const Category = require("../../models/category");
-const Reciepe = require("../../models/reciepe");
+const Recipe = require("../../models/recipe");
 
 exports.fetchCategory = async (categoryId, next) => {
   try {
@@ -11,9 +10,9 @@ exports.fetchCategory = async (categoryId, next) => {
   }
 };
 
-exports.getCatogery = async (req, res, next) => {
+exports.getCategory = async (req, res, next) => {
   try {
-    const category = await Category.find();
+    const category = await Category.find().populate("recipes");
     return res.json(category);
   } catch (error) {
     next(error);
@@ -34,20 +33,21 @@ exports.categoryCreate = async (req, res, next) => {
     next(error);
   }
 };
-// exports.recipeCreate = async (req, res, next) => {
-//   try {
-//     const categoryId = req.params.categoryId;
-//     req.body = { ...req.body, category: categoryId };
-//     const newReciepe = await Reciepe.create(req.body);
-//     await Category.findOneAndUpdate(
-//       { _id: req.params.categoryId },
-//       { $push: { reciepes: newReciepe._id } }
-//     );
-//     return res.status(201).json(newReciepe);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+// ! this come from the recipe controller to make a new recipe by ID:
+exports.recipeCreate = async (req, res, next) => {
+  try {
+    const categoryId = req.params.categoryId;
+    req.body = { ...req.body, category: categoryId };
+    const newRecipe = await Recipe.create(req.body);
+    await Category.findOneAndUpdate(
+      { _id: req.params.categoryId },
+      { $push: { recipes: newRecipe._id } }
+    );
+    return res.status(201).json(newRecipe);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // exports.categoryDelete = async (req, res, next) => {
 //   try {

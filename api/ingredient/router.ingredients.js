@@ -1,31 +1,32 @@
+// ! SHOULD WE ADD ROUTES FOR IT || PUT IT INSIDE RECIPE ?
 const express = require("express");
 // ? ------------------------THE FUNCTION THAT BEEN IMPORT IT ---------------------------------------
 
 const {
-  fetchCategory,
-  categoryCreate,
-  getCategory,
+  fetchIngredient,
+  ingredientCreate,
+  getIngredient,
   recipeCreate,
-} = require("./controller.category");
+} = require("./controller.ingredients");
 const upload = require("../../middleware/multer");
 const router = express.Router();
 // ? ---------------------------------------------------------- ---------------------------------------
 
-router.param("categoryId", async (req, res, next, categoryId) => {
-  const category = await fetchCategory(categoryId, next);
-  if (category) {
-    req.category = category;
+router.param("ingredientId", async (req, res, next, ingredientId) => {
+  const ingredient = await fetchIngredient(ingredientId, next);
+  if (ingredient) {
+    req.ingredient = ingredient;
     next();
   } else {
-    const err = new Error("category Not Found");
+    const err = new Error("ingredient Not Found");
     err.status = 404;
     next(err);
   }
 });
 
 //  ! ------------------------------ROUTES---------------------------------------
-router.get("/", getCategory);
-router.post("/", upload.single("image"), categoryCreate);
-router.post("/:categoryId/recipe", upload.single("image"), recipeCreate);
+router.get("/", getIngredient);
+router.post("/", upload.single("image"), ingredientCreate);
+// router.post("/:ingredientId/recipe", upload.single("image"), recipeCreate);
 //  ! ------------------------------------------------------------------------
 module.exports = router;
