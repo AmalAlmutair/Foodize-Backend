@@ -20,20 +20,20 @@ exports.getIngredient = async (req, res, next) => {
   }
 };
 
-exports.ingredientCreate = async (req, res, next) => {
-  try {
-    if (req.file) {
-      req.body.image = ` http://${req.get("host")}/media/${req.file.filename}`;
-      // req.body.image = `/${req.file.path}`;
-      // req.body.image = req.body.image.replace("\\", "/");
-    }
+// exports.ingredientCreate = async (req, res, next) => {
+//   try {
+//     if (req.file) {
+//       req.body.image = ` http://${req.get("host")}/media/${req.file.filename}`;
+//       // req.body.image = `/${req.file.path}`;
+//       // req.body.image = req.body.image.replace("\\", "/");
+//     }
 
-    const newIngredient = await ingredient.create(req.body);
-    return res.status(201).json(newIngredient);
-  } catch (error) {
-    next(error);
-  }
-};
+//     const newIngredient = await ingredient.create(req.body);
+//     return res.status(201).json(newIngredient);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // exports.ingredientDelete = async (req, res, next) => {
 //   try {

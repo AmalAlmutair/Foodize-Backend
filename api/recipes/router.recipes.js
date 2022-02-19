@@ -3,6 +3,7 @@ const express = require("express");
 const {
   fetchRecipes,
   getRecipes,
+  // ingredientCreate,
   //   recipeDelete,
   //   recipeUpdate,
 } = require("./controller.recipes");
@@ -25,6 +26,7 @@ router.param("recipeId", async (req, res, next, recipeId) => {
 //  ! ------------------------------ROUTES---------------------------------------
 // router.get("/", fetchRecipes);
 router.get("/", getRecipes);
+// router.post("/category/:slug/recipe", upload.single("image"), ingredientCreate);
 // router.get("/:ingredients", getRecipes);
 
 // router.delete("/:recipeId", recipeDelete);

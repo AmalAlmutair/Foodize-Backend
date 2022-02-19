@@ -6,6 +6,7 @@ const IngredientSchema = new mongoose.Schema(
     name: String,
     description: String,
     image: String,
+    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
   },
   { timestamps: true }
 );
