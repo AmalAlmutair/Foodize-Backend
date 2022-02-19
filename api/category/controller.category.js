@@ -10,9 +10,9 @@ exports.fetchCategory = async (categoryId, next) => {
   }
 };
 
-exports.getCatogery = async (req, res, next) => {
+exports.getCategory = async (req, res, next) => {
   try {
-    const category = await Category.find();
+    const category = await Category.find().populate("recipes");
     return res.json(category);
   } catch (error) {
     next(error);
@@ -33,6 +33,7 @@ exports.categoryCreate = async (req, res, next) => {
     next(error);
   }
 };
+// ! this come from the recipe controller to make a new recipe by ID:
 exports.recipeCreate = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;

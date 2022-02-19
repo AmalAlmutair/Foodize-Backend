@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongooseSlugPlugin = require("mongoose-slug-plugin");
-// const reciepes = require("./reciepes");
+// const recipes = require("./recipes");
 const RecipeSchema = new mongoose.Schema(
   {
     name: String,

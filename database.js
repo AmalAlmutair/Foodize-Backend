@@ -11,3 +11,5 @@ const connectDB = async () => {
   console.log(`mongo connected: ${conn.connection.host}`);
 };
 module.exports = connectDB;
+
+// ! WE DON'T USE <ENV> FILE YET SHOULD WE??
