@@ -3,8 +3,8 @@ const express = require("express");
 const {
   fetchRecipes,
   getRecipes,
-  // ingredientCreate,
-  //   recipeDelete,
+  ingredientCreate,
+  recipeDelete,
   //   recipeUpdate,
 } = require("./controller.recipes");
 const upload = require("../../middleware/multer");
@@ -29,7 +29,7 @@ router.get("/", getRecipes);
 // router.post("/category/:slug/recipe", upload.single("image"), ingredientCreate);
 // router.get("/:ingredients", getRecipes);
 
-// router.delete("/:recipeId", recipeDelete);
+router.delete("/:recipeId", recipeDelete);
 // router.put("/:recipeId", upload.single("image"), recipeUpdate);
 
 module.exports = router;

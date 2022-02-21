@@ -36,11 +36,17 @@ exports.categoryCreate = async (req, res, next) => {
 // ! this come from the recipe controller to make a new recipe by ID:
 exports.recipeCreate = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = ` http://${req.get("host")}/media/${req.file.filename}`;
+    }
     const categoryId = req.params.categoryId;
-    req.body = { ...req.body, category: categoryId };
+    const category = await Category.findById(categoryId);
+    req.body = { ...req.body, category: category._id };
+    console.log("categoryId", typeof category);
+
     const newRecipe = await Recipe.create(req.body);
     await Category.findOneAndUpdate(
-      { _id: req.params.categoryId },
+      { _id: categoryId },
       { $push: { recipes: newRecipe._id } }
     );
     return res.status(201).json(newRecipe);
@@ -49,11 +55,11 @@ exports.recipeCreate = async (req, res, next) => {
   }
 };
 
-// exports.categoryDelete = async (req, res, next) => {
-//   try {
-//     await req.category.remove();
-//     res.status(204).end();
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+exports.categoryDelete = async (req, res, next) => {
+  try {
+    await req.category.remove();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};

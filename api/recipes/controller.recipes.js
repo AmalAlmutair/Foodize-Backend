@@ -20,11 +20,11 @@ exports.getRecipes = async (req, res, next) => {
   }
 };
 
-// exports.recipeDelete = async (req, res, next) => {
-//   try {
-//     await req.recipe.remove();
-//     res.status(204).end();
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+exports.recipeDelete = async (req, res, next) => {
+  try {
+    await req.recipe.remove();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
