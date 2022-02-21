@@ -4,7 +4,7 @@ const Ingredient = require("../../models/ingredients");
 
 exports.fetchIngredient = async (ingredientId, next) => {
   try {
-    const ingredient = await ingredient.findById(ingredientId);
+    const ingredient = await Ingredient.findById(ingredientId);
     return ingredient;
   } catch (error) {
     next(error);
@@ -13,7 +13,7 @@ exports.fetchIngredient = async (ingredientId, next) => {
 
 exports.getIngredient = async (req, res, next) => {
   try {
-    const ingredient = await ingredient.find();
+    const ingredient = await Ingredient.find();
     return res.json(ingredient);
   } catch (error) {
     next(error);
@@ -28,15 +28,21 @@ exports.ingredientCreate = async (req, res, next) => {
       // req.body.image = req.body.image.replace("\\", "/");
     }
     // ! last update: 21-2:
-    const ingredientsId = req.params.ingredientsId;
-    const ingredient = await Ingredient.findById(ingredientsId);
-    req.body = { ...req.body, ingredient: ingredient._id };
+    const { recipeId } = req.params;
+    // const ingredient = await Ingredient.findById(ingredientsId);
+    // req.body = { ...req.body, ingredient: ingredient._id };
 
     const newIngredient = await Ingredient.create(req.body);
+
     await Ingredient.findOneAndUpdate(
-      { _id: ingredientsId },
-      { $push: { recipes: newIngredient._id } }
+      { _id: newIngredient._id },
+      { $push: { recipes: recipeId } }
     );
+
+    await Recipe.findByIdAndUpdate(recipeId, {
+      $push: { ingredients: newIngredient._id },
+    });
+
     return res.status(201).json(newIngredient);
   } catch (error) {
     next(error);

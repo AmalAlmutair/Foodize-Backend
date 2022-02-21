@@ -25,7 +25,8 @@ app.use((req, res, next) => {
 // ! ------------------------ROUTES --------------------------------------------
 app.use("/category", categoryRoutes);
 app.use("/recipe", recipesRoutes);
-app.use("/ingredient", ingredientRoutes);
+app.use("/ingredient", ingredientRoutes); // every thing start here
+
 // ! -----------------------------------------------------------------
 
 // if the status 500 or error do this:
