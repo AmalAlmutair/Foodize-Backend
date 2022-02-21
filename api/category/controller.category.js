@@ -42,7 +42,6 @@ exports.recipeCreate = async (req, res, next) => {
     const categoryId = req.params.categoryId;
     const category = await Category.findById(categoryId);
     req.body = { ...req.body, category: category._id };
-    console.log("categoryId", typeof category);
 
     const newRecipe = await Recipe.create(req.body);
     await Category.findOneAndUpdate(

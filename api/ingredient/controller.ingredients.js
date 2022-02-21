@@ -1,6 +1,6 @@
 const Category = require("../../models/category");
 const Recipe = require("../../models/recipe");
-const ingredient = require("../../models/ingredients");
+const Ingredient = require("../../models/ingredients");
 
 exports.fetchIngredient = async (ingredientId, next) => {
   try {
@@ -27,6 +27,17 @@ exports.ingredientCreate = async (req, res, next) => {
       // req.body.image = `/${req.file.path}`;
       // req.body.image = req.body.image.replace("\\", "/");
     }
+    // ! last update: 21-2:
+    const ingredientsId = req.params.ingredientsId;
+    const ingredient = await Ingredient.findById(ingredientsId);
+    req.body = { ...req.body, ingredient: ingredient._id };
+
+    const newIngredient = await Ingredient.create(req.body);
+    await Ingredient.findOneAndUpdate(
+      { _id: ingredientsId },
+      { $push: { recipes: newIngredient._id } }
+    );
+    return res.status(201).json(newIngredient);
   } catch (error) {
     next(error);
   }
